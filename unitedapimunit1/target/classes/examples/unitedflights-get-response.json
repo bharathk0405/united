@@ -1,0 +1,31 @@
+{
+  "flights": [
+    {
+      "code": "A1B2C4",
+      "price": "199.99",
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2015/02/11",
+      "airlineName": "Delta",
+      "planeType": "Boing 737"
+    },
+    {
+      "code": "A134DS",
+      "price": "750.0",
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2015/04/11",
+      "airlineName": "Delta",
+      "planeType": "Boing 777"
+    },
+    {
+      "code": "A1QWER",
+      "price": "496.0",
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2015/08/11",
+      "airlineName": "Delta",
+      "planeType": "Boing 747"
+    }
+  ]
+}

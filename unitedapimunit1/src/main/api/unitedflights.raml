@@ -1,0 +1,20 @@
+#%RAML 0.8
+version: 1.0.0
+title: unitedflights
+baseUri: http://localhost:8081/api
+/unitedflights:
+  get: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            example: !include examples/unitedflights-get-response.json
+  /{destination}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+             example: !include examples/unitedflights-get-response.json 
+               
+
