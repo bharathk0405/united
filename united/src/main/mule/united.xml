@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b8a233d6-c0e7-41a8-b758-d33c5b8cc094" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="527db522-4c60-46c6-a91e-5e3079c012e3" >
+		<http:request-connection host="mu.mulesoft-training.com" port="80" />
+	</http:request-config>
+	<flow name="unitedFlow" doc:id="b6af1ada-e192-4c9b-8c1e-2cf9d3b0ba55" initialState="stopped">
+		<http:listener doc:name="Listener" doc:id="788222e1-58df-42fd-b9bb-6fa3fa655f2a" config-ref="HTTP_Listener_config" path="/flightsbydestination/{destination}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5cb1a0f4-09bd-40ec-aaf6-f87e85173ced" />
+		<http:request method="GET" doc:name="Request" doc:id="369177d9-251b-4881-9fc9-18c6d3a1ea07" config-ref="HTTP_Request_configuration" path="/essentials/united/flights/#[attributes.uriParams.destination]"/>
+	</flow>
+</mule>

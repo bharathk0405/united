@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="2849393e-b332-4640-86c1-b2210455928e" >
+		<wsc:connection wsdlLocation="http://mu.mulesoft-training.com/essentials/deltas?wsdl" service="TicketServiceService" port="TicketServicePort" address="http://mu.mulesoft-training.com/essentials/delta">
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<flow name="deltaFlow" doc:id="e676fbb8-4dc8-4832-8865-8559a97ab32a" >
+		<http:listener doc:name="Listener" doc:id="7af4e85a-4508-4a25-be1d-4e00f0d59e76" config-ref="HTTP_Listener_config" path="/deltabydestination/{destination}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0f7a3e8c-e4d4-447d-9036-1052fb4958e0" />
+		<ee:transform doc:name="Transform Message" doc:id="978e726e-501b-423b-a24e-cdf814cf6e44" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://soap.training.mulesoft.com/
+---
+{
+	ns0#findFlight: {
+		destination: attributes.uriParams.destination
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a6431766-5b54-4c7b-a1d3-f74a153cb5ca" message="hiiiiiiiiiiiiii"/>
+		<wsc:consume doc:name="Consume" doc:id="293d28bf-3dea-42c1-bef0-191cdfcbaac8" config-ref="Web_Service_Consumer_Config" operation="findFlight"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9d6f0e50-034e-4f48-88f5-abe856fc92b8" message="nnnnnnnnnnnnnnn"/>
+		<ee:transform doc:name="Transform Message" doc:id="3e24dd1b-344e-4e48-9da9-576edf4d0f28" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
